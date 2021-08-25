@@ -9,6 +9,12 @@
         <p>{{ $article->description }}</p>
         <p>{{ $article->body }}</p>
         <hr>
-        <p><a href="/">На главную</a></p>
+        <p><a href="/" class="btn btn-primary">На главную</a></p>
+        <p><a href="/articles/{{ $article->id }}/edit" class="btn btn-primary"> Редактировать</a></p>
+        <form action="/articles/{{ $article->id }}" method="POST">
+            @csrf
+            @method('DELETE')
+            <button type="submit" class="btn btn-primary">Удалить статью</button>
+        </form>
     </article>
 @endsection

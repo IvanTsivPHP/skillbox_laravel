@@ -30,6 +30,12 @@ Route::get('/articles/create', [ArticlesController::class, 'create']);
 
 Route::get('/articles/{article}',[ArticlesController::class, 'show']);
 
+Route::patch('/articles/{article}',[ArticlesController::class, 'update']);
+
+Route::delete('/articles/{article}',[ArticlesController::class, 'destroy']);
+
+Route::get('/articles/{article}/edit',[ArticlesController::class, 'edit']);
+
 Route::post('/articles', [ArticlesController::class, 'store']);
 
 require __DIR__.'/auth.php';

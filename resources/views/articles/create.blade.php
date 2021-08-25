@@ -1,6 +1,6 @@
 @extends('layout')
 
-@section('title', 'Новая статья')
+@section('title', isset($article)?'Редактировать статью':'Новая статья')
 
 @section('content')
     @if($errors->count())
@@ -11,29 +11,47 @@
     </div>
     @endif
 <div class="col-md-8">
-    <form action="/articles" method="post">
+    <form action="/articles{{isset($article)?'/' . $article->id:''}}" method="post">
         @csrf
-    <div class="input-group mb-3">
-        <span class="input-group-text" id="basic-addon1">Код статьи</span>
-        <input type="text" class="form-control" placeholder="Латиница, цифры, тире и подчеркивания." name="code">
-    </div>
-    <div class="input-group mb-3">
-        <span class="input-group-text" id="basic-addon1">Название статьи</span>
-        <input type="text" class="form-control" placeholder="5-100 символов" name="name">
-    </div>
-    <div class="input-group mb-3">
-        <span class="input-group-text" id="basic-addon1">Кратокое описание</span>
-        <textarea type="text" class="form-control" placeholder="До 225 символов" name="description"></textarea>
-    </div>
-    <div class="input-group mb-3">
-        <span class="input-group-text" id="basic-addon1">Текст статьи</span>
-        <textarea type="text" class="form-control" placeholder="" name="body"></textarea>
-    </div>
-    <div class="mb-3 form-check">
-        <input type="checkbox" class="form-check-input" id="exampleCheck1" name="published" value=true>
-        <label class="form-check-label" for="exampleCheck1">Опубликовано</label>
-    </div>
-    <button type="submit" class="btn btn-primary">Создать</button>
+        {{isset($article)?method_field('PATCH'):''}}
+        <div class="input-group mb-3">
+            <span class="input-group-text" id="basic-addon1">Код статьи</span>
+            <input type="text"
+                   class="form-control"
+                   placeholder="Латиница, цифры, тире и подчеркивания."
+                   name="code"
+                   value="{{ isset($article)?$article->code:'' }}">
+        </div>
+        <div class="input-group mb-3">
+            <span class="input-group-text" id="basic-addon1">Название статьи</span>
+            <input type="text"
+                   class="form-control"
+                   placeholder="5-100 символов"
+                   name="name" value="{{ isset($article)?$article->name:'' }}">
+        </div>
+        <div class="input-group mb-3">
+            <span class="input-group-text" id="basic-addon1">Кратокое описание</span>
+            <textarea class="form-control"
+                      placeholder="До 225 символов"
+                      name="description">{{ isset($article)?$article->description:'' }}</textarea>
+        </div>
+        <div class="input-group mb-3">
+            <span class="input-group-text" id="basic-addon1">Текст статьи</span>
+            <textarea class="form-control"
+                      placeholder=""
+                      name="body">{{ isset($article)?$article->body:'' }}</textarea>
+        </div>
+        <div class="mb-3 form-check">
+            <input type="checkbox"
+                   class="form-check-input"
+                   id="exampleCheck1"
+                   name="published"
+                   value=true
+                   {{ isset($article) && $article->published?'checked':'' }}
+            >
+            <label class="form-check-label" for="exampleCheck1">Опубликовано</label>
+        </div>
+    <button type="submit" class="btn btn-primary">{{ isset($article)?'Сохранить':'Создать' }}</button>
     </form>
 
 </div>
