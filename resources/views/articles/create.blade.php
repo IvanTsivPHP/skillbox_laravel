@@ -15,6 +15,12 @@
         @csrf
         {{isset($article)?method_field('PATCH'):''}}
         <div class="input-group mb-3">
+            <input type="text"
+                   class="form-control"
+                   placeholder="Латиница, цифры, тире и подчеркивания."
+                   name="id"
+                   hidden
+                   value="{{ isset($article)?$article->id:'' }}">
             <span class="input-group-text" id="basic-addon1">Код статьи</span>
             <input type="text"
                    class="form-control"

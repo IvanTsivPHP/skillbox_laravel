@@ -38,19 +38,13 @@ class ArticlesController extends Controller
      */
     public function store(ArticleFormRequest $request)
     {
-        $request->validated();
-
         $article = new Articles();
 
         $article->code = $request['code'];
         $article->name = $request['name'];
         $article->description = $request['description'];
         $article->body = $request['body'];
-        if (isset($request['published'])) {
-            $article->published = true;
-        } else {
-            $article->published = false;
-        }
+        $article->published = isset($request['published']);
         $article->save();
         return redirect('/')->with(['message' => 'Статья успешно создана']);
     }
@@ -84,11 +78,7 @@ class ArticlesController extends Controller
         $article->name = $request['name'];
         $article->description = $request['description'];
         $article->body = $request['body'];
-        if (isset($request['published'])) {
-            $article->published = true;
-        } else {
-            $article->published = false;
-        }
+        $article->published = isset($request['published']);
         $article->update();
         return redirect('/')->with(['message' => 'Статья успешно изменена']);
     }
@@ -96,12 +86,12 @@ class ArticlesController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param Articles $article
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Articles $article)
     {
-        $article = Articles::where('id', $id)->firstorfail()->delete();
+        $article->delete();
         return redirect('/')->with(['message' => 'Статья успешно удалена']);
     }
 }

@@ -24,14 +24,8 @@ class ArticleFormRequest extends FormRequest
      */
     public function rules()
     {
-        if ($this->method() == 'PATCH') {
-            $exception = ',code,' . $this->article['id'];
-        } else {
-            $exception = null;
-        }
-
         return [
-            'code' => 'required|regex:/^[a-zA-Z0-9_\-]*$/|unique:articles' . $exception,
+            'code' => 'required|regex:/^[a-zA-Z0-9_\-]*$/|unique:articles,code,' . $this->id,
             'name' => 'required|min:5|max:100',
             'description' => 'required|max:225',
             'body' => 'required'
