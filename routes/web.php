@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\TagsController;
+use App\Services\TagsSynchronizer;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ArticlesController;
 use App\Http\Controllers\MainController;
@@ -15,6 +17,9 @@ use App\Http\Controllers\AdminController;
 | contains the "web" middleware group. Now create something great!
 |
 */
+app()->bind(TagsSynchronizer::class, function () {
+    return new TagsSynchronizer();
+});
 
 Route::get('/',[ArticlesController::class, 'index']);
 
@@ -37,5 +42,7 @@ Route::delete('/articles/{article}',[ArticlesController::class, 'destroy']);
 Route::get('/articles/{article}/edit',[ArticlesController::class, 'edit']);
 
 Route::post('/articles', [ArticlesController::class, 'store']);
+
+Route::get('/tags/{tag}', [TagsController::class, 'index']);
 
 require __DIR__.'/auth.php';

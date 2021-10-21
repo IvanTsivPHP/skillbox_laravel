@@ -1,4 +1,4 @@
-<!doctype html>
+ <!doctype html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -67,7 +67,12 @@
         </div>
         @include('main')
     </header>
+    <div class="row g-5">
+        <div class="col-md-8">
     @yield('content')
+        </div>
+    @include('layouts.sidebar')
+    </div>
 </main>
 </body>
 </html>

@@ -28,7 +28,8 @@ class ArticleFormRequest extends FormRequest
             'code' => 'required|regex:/^[a-zA-Z0-9_\-]*$/|unique:articles,code,' . $this->id,
             'name' => 'required|min:5|max:100',
             'description' => 'required|max:225',
-            'body' => 'required'
+            'body' => 'required',
+            'tags' => ''
         ];
     }
 }

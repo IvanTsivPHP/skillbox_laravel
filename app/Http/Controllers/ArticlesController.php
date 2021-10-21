@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ArticleFormRequest;
-use App\Models\Articles;
+use App\Models\Article;
+use App\Services\TagsSynchronizer;
 use Illuminate\Http\Request;
 
 
@@ -16,7 +17,7 @@ class ArticlesController extends Controller
      */
     public function index()
     {
-        $articles =  Articles::latest()->get();
+        $articles =  Article::with('tags')->latest()->get();
         return view('articles.index', compact('articles'));
     }
 
@@ -33,12 +34,13 @@ class ArticlesController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param ArticleFormRequest $request
+     * @param TagsSynchronizer $synchronizer
      * @return \Illuminate\Http\Response
      */
-    public function store(ArticleFormRequest $request)
+    public function store(ArticleFormRequest $request, TagsSynchronizer $synchronizer)
     {
-        $article = new Articles();
+        $article = new Article();
 
         $article->code = $request['code'];
         $article->name = $request['name'];
@@ -46,33 +48,42 @@ class ArticlesController extends Controller
         $article->body = $request['body'];
         $article->published = isset($request['published']);
         $article->save();
+
+        $tags = collect(explode(',', str_replace(' ', '', $request['tags'])));
+        $synchronizer->sync($tags, $article);
         return redirect('/')->with(['message' => 'Статья успешно создана']);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param Articles $article
+     * @param Article $article
      * @return \Illuminate\Http\Response
      */
-    public function show(Articles $article)
+    public function show(Article $article)
     {
         return view('articles.show', compact('article'));
     }
 
-    public function edit(Articles $article)
+    public function edit(Article $article)
     {
-        return view('articles.create', compact('article'));
+        $tagString = '';
+        foreach ($article->tags as $tag) {
+            $tagString .= ', ' . $tag->name;
+        }
+        $tagString = substr($tagString, 2);
+        return view('articles.create', compact('article', 'tagString'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param ArticleFormRequest $request
-     * @param Articles $article
+     * @param Article $article
+     * @param TagsSynchronizer $synchronizer
      * @return void
      */
-    public function update(ArticleFormRequest $request, Articles $article)
+    public function update(ArticleFormRequest $request, Article $article, TagsSynchronizer $synchronizer)
     {
         $article->code = $request['code'];
         $article->name = $request['name'];
@@ -80,16 +91,20 @@ class ArticlesController extends Controller
         $article->body = $request['body'];
         $article->published = isset($request['published']);
         $article->update();
+
+        $tags = collect(explode(',', str_replace(' ', '', $request['tags'])));
+        $synchronizer->sync($tags, $article);
         return redirect('/')->with(['message' => 'Статья успешно изменена']);
+
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param Articles $article
+     * @param Article $article
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Articles $article)
+    public function destroy(Article $article)
     {
         $article->delete();
         return redirect('/')->with(['message' => 'Статья успешно удалена']);
