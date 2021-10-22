@@ -38,7 +38,7 @@ class ArticlesController extends Controller
      * @param TagsSynchronizer $synchronizer
      * @return \Illuminate\Http\Response
      */
-    public function store(ArticleFormRequest $request, TagsSynchronizer $synchronizer)
+    public function store(ArticleFormRequest $request, TagsSynchronizer $tagsSynchronizer)
     {
         $article = new Article();
 
@@ -49,8 +49,8 @@ class ArticlesController extends Controller
         $article->published = isset($request['published']);
         $article->save();
 
-        $tags = collect(explode(',', str_replace(' ', '', $request['tags'])));
-        $synchronizer->sync($tags, $article);
+        $tags = collect(explode(',', trim($request['tags'])));
+        $tagsSynchronizer->sync($tags, $article);
         return redirect('/')->with(['message' => 'Статья успешно создана']);
     }
 
@@ -92,7 +92,7 @@ class ArticlesController extends Controller
         $article->published = isset($request['published']);
         $article->update();
 
-        $tags = collect(explode(',', str_replace(' ', '', $request['tags'])));
+        $tags = collect(explode(',', trim($request['tags'])));
         $synchronizer->sync($tags, $article);
         return redirect('/')->with(['message' => 'Статья успешно изменена']);
 

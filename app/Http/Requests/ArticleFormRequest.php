@@ -29,7 +29,7 @@ class ArticleFormRequest extends FormRequest
             'name' => 'required|min:5|max:100',
             'description' => 'required|max:225',
             'body' => 'required',
-            'tags' => ''
+            'tags' => 'nullable|string'
         ];
     }
 }
