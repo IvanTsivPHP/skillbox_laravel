@@ -47,6 +47,12 @@
                       placeholder=""
                       name="body">{{ isset($article)?$article->body:'' }}</textarea>
         </div>
+        <div class="input-group mb-3">
+            <span class="input-group-text" id="basic-addon1">Тэги</span>
+            <input type="text"
+                   class="form-control"
+                   name="tags" value="{{ isset($article)?$article->tags->pluck('name')->implode(', '):'' }}">
+        </div>
         <div class="mb-3 form-check">
             <input type="checkbox"
                    class="form-check-input"
