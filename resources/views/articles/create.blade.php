@@ -51,7 +51,7 @@
             <span class="input-group-text" id="basic-addon1">Тэги</span>
             <input type="text"
                    class="form-control"
-                   name="tags" value="{{ isset($tagString)?$tagString:'' }}">
+                   name="tags" value="{{ isset($article)?$article->tags->pluck('name')->implode(', '):'' }}">
         </div>
         <div class="mb-3 form-check">
             <input type="checkbox"

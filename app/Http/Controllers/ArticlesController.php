@@ -67,12 +67,7 @@ class ArticlesController extends Controller
 
     public function edit(Article $article)
     {
-        $tagString = '';
-        foreach ($article->tags as $tag) {
-            $tagString .= ', ' . $tag->name;
-        }
-        $tagString = substr($tagString, 2);
-        return view('articles.create', compact('article', 'tagString'));
+        return view('articles.create', compact('article'));
     }
 
     /**
