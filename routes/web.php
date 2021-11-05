@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\TagsController;
 use App\Services\TagsSynchronizer;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ArticlesController;
 use App\Http\Controllers\MainController;
@@ -45,4 +46,6 @@ Route::post('/articles', [ArticlesController::class, 'store']);
 
 Route::get('/tags/{tag}', [TagsController::class, 'index']);
 
-require __DIR__.'/auth.php';
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

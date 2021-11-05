@@ -10,6 +10,11 @@ use Illuminate\Http\Request;
 
 class ArticlesController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth', ['except' => ['index', 'show']]);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -47,6 +52,7 @@ class ArticlesController extends Controller
         $article->description = $request['description'];
         $article->body = $request['body'];
         $article->published = isset($request['published']);
+        $article->owner_id= auth()->id();
         $article->save();
 
         $tags = collect(explode(',', trim($request['tags'])));
@@ -67,6 +73,8 @@ class ArticlesController extends Controller
 
     public function edit(Article $article)
     {
+        $this->authorize('update', $article);
+
         return view('articles.create', compact('article'));
     }
 
@@ -80,6 +88,8 @@ class ArticlesController extends Controller
      */
     public function update(ArticleFormRequest $request, Article $article, TagsSynchronizer $synchronizer)
     {
+        $this->authorize('update', $article);
+
         $article->code = $request['code'];
         $article->name = $request['name'];
         $article->description = $request['description'];
@@ -101,6 +111,8 @@ class ArticlesController extends Controller
      */
     public function destroy(Article $article)
     {
+        $this->authorize('delete', $article);
+
         $article->delete();
         return redirect('/')->with(['message' => 'Статья успешно удалена']);
     }
