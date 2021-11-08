@@ -107,9 +107,7 @@ class ArticlesController extends Controller
 
         $tags = collect(explode(',', trim($request['tags'])));
         $synchronizer->sync($tags, $article);
-
-
-
+        
         Notification::route('mail', config('admin.email'))
         ->notify(new ArticleEdited($article));
 
