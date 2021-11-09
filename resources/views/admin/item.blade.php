@@ -1,6 +1,7 @@
-<article class="blog-post">
-    <h2 class="blog-post-title">{{ $item->email }}</h2>
-    <p class="blog-post-meta">{{ $item->created_at }}</p>
-    <p>{{ $item->message }}</p>
+<article class="col-md-8">
+    <h2 class="blog-post-title"><a href="/admin/articles/{{ $article->id }}">{{ $article->name }}</a></h2>
+    <p class="blog-post-meta">{{ $article->created_at }}</p>
+    <p>{{ $article->description }}</p>
     <hr>
 </article>
+

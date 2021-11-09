@@ -5,19 +5,18 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class DatabaseSeeder extends Seeder
+class Roles_UsersSeeder extends Seeder
 {
     /**
-     * Seed the application's database.
+     * Run the database seeds.
      *
      * @return void
      */
     public function run()
     {
-        $this->call([
-            UserSeeder::class,
-            RoleSeeder::class,
-            Roles_UsersSeeder::class
+        DB::table('role_user')->insert([
+            'user_id' => 1,
+            'role_id' => 1
         ]);
     }
 }

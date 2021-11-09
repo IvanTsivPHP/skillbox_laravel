@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ArticlesController;
 use App\Http\Controllers\MainController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\Admin\ArticlesController as AdminArticlesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -49,3 +50,17 @@ Route::get('/tags/{tag}', [TagsController::class, 'index']);
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Route::get('/admin/', [AdminArticlesController::class, 'index']);
+
+Route::get('/admin/articles/create', [AdminArticlesController::class, 'create']);
+
+Route::get('/admin/articles/{article}',[AdminArticlesController::class, 'show']);
+
+Route::patch('/admin/articles/{article}',[AdminArticlesController::class, 'update']);
+
+Route::delete('/admin/articles/{article}',[AdminArticlesController::class, 'destroy']);
+
+Route::get('/admin/articles/{article}/edit',[AdminArticlesController::class, 'edit']);
+
+Route::post('/admin/articles', [AdminArticlesController::class, 'store']);

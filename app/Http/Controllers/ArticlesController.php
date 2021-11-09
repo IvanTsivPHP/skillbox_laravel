@@ -26,7 +26,7 @@ class ArticlesController extends Controller
      */
     public function index()
     {
-        $articles =  Article::with('tags')->latest()->get();
+        $articles =  Article::with('tags')->where('published', true)->latest()->get();
         return view('articles.index', compact('articles'));
     }
 
@@ -107,7 +107,7 @@ class ArticlesController extends Controller
 
         $tags = collect(explode(',', trim($request['tags'])));
         $synchronizer->sync($tags, $article);
-        
+
         Notification::route('mail', config('admin.email'))
         ->notify(new ArticleEdited($article));
 
