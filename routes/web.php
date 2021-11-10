@@ -51,7 +51,7 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Route::get('/admin/', [AdminArticlesController::class, 'index']);
+Route::get('/admin/', [AdminArticlesController::class, 'index'])->name('admin');
 
 Route::get('/admin/articles/create', [AdminArticlesController::class, 'create']);
 

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Requests\ArticleFormRequest;
 use App\Http\Controllers\Controller;
 use App\Models\Article;
+use App\Models\User;
 use App\Notifications\ArticleCreated;
 use App\Notifications\ArticleDeleted;
 use App\Notifications\ArticleEdited;
@@ -67,10 +68,9 @@ class ArticlesController extends Controller
         $tags = collect(explode(',', trim($request['tags'])));
         $synchronizer->sync($tags, $article);
 
-        Notification::route('mail', config('admin.email'))
-            ->notify(new ArticleEdited($article));
+        Notification::send(User::getAdmin(), new ArticleEdited($article));
 
-        return redirect('/admin/')->with(['message' => 'Статья успешно изменена']);
+        return redirect()->route('admin')->with(['message' => 'Статья успешно изменена']);
     }
 }
 
