@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enum\Roles;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -47,7 +48,22 @@ class User extends Authenticatable
         return $this->belongsToMany(Role::class);
     }
 
-    public function isAdmin() {
-        return $this->roles()->where('name', 'admin')->exists();
+    public function Admin()
+    {
+        return $this->roles()->where('name', Roles::Admin);
+    }
+
+    public function isAdmin()
+    {
+        return $this->Admin()->exists();
+    }
+
+    public static function getAdmin()
+    {
+        return self::whereHas(
+            'roles', function ($q) {
+                $q->where('name', Roles::Admin);
+        }
+        )->get();
     }
 }

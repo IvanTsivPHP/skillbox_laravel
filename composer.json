@@ -25,6 +25,7 @@
     },
     "autoload": {
         "files": [
+            "app/Enum/Roles.php",
             "app/helpers.php"
         ],
         "psr-4": {

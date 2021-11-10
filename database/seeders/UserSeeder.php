@@ -17,10 +17,10 @@ class UserSeeder extends Seeder
     public function run()
     {
         DB::table('users')->insert([
-            'name' => config('defaultUser.name'),
-            'email' => config('defaultUser.email'),
+            'name' => config('admin.name'),
+            'email' => config('admin.email'),
             'email_verified_at' => Carbon::now()->toDateTimeString(),
-            'password' => Hash::make(config('defaultUser.password')),
+            'password' => Hash::make(config('admin.password')),
         ]);
     }
 }

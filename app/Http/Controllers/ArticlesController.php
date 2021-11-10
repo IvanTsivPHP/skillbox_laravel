@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ArticleFormRequest;
 use App\Models\Article;
+use App\Models\User;
 use App\Notifications\ArticleCreated;
 use App\Notifications\ArticleDeleted;
 use App\Notifications\ArticleEdited;
@@ -26,7 +27,7 @@ class ArticlesController extends Controller
      */
     public function index()
     {
-        $articles =  Article::with('tags')->where('published', true)->latest()->get();
+        $articles =  Article::with('tags')->published()->latest()->get();
         return view('articles.index', compact('articles'));
     }
 
@@ -62,8 +63,7 @@ class ArticlesController extends Controller
         $tags = collect(explode(',', trim($request['tags'])));
         $tagsSynchronizer->sync($tags, $article);
 
-        Notification::route('mail', config('admin.email'))
-            ->notify(new ArticleCreated($article));
+        Notification::send(User::getAdmin(), new ArticleCreated($article));
 
         return redirect('/')->with(['message' => 'Статья успешно создана']);
     }
@@ -108,8 +108,7 @@ class ArticlesController extends Controller
         $tags = collect(explode(',', trim($request['tags'])));
         $synchronizer->sync($tags, $article);
 
-        Notification::route('mail', config('admin.email'))
-        ->notify(new ArticleEdited($article));
+        Notification::send(User::getAdmin(), new ArticleEdited($article));
 
         return redirect('/')->with(['message' => 'Статья успешно изменена']);
 
@@ -127,8 +126,7 @@ class ArticlesController extends Controller
 
         $article->delete();
 
-        Notification::route('mail', config('admin.email'))
-            ->notify(new ArticleDeleted($article));
+        Notification::send(User::getAdmin(), new ArticleDeleted($article));
 
         return redirect('/')->with(['message' => 'Статья успешно удалена']);
     }
