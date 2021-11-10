@@ -4,8 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ArticleFormRequest;
 use App\Models\Article;
+use App\Notifications\ArticleCreated;
+use App\Notifications\ArticleDeleted;
+use App\Notifications\ArticleEdited;
 use App\Services\TagsSynchronizer;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Notification;
 
 
 class ArticlesController extends Controller
@@ -57,6 +61,10 @@ class ArticlesController extends Controller
 
         $tags = collect(explode(',', trim($request['tags'])));
         $tagsSynchronizer->sync($tags, $article);
+
+        Notification::route('mail', config('admin.email'))
+            ->notify(new ArticleCreated($article));
+
         return redirect('/')->with(['message' => 'Статья успешно создана']);
     }
 
@@ -99,6 +107,10 @@ class ArticlesController extends Controller
 
         $tags = collect(explode(',', trim($request['tags'])));
         $synchronizer->sync($tags, $article);
+        
+        Notification::route('mail', config('admin.email'))
+        ->notify(new ArticleEdited($article));
+
         return redirect('/')->with(['message' => 'Статья успешно изменена']);
 
     }
@@ -114,6 +126,10 @@ class ArticlesController extends Controller
         $this->authorize('delete', $article);
 
         $article->delete();
+
+        Notification::route('mail', config('admin.email'))
+            ->notify(new ArticleDeleted($article));
+
         return redirect('/')->with(['message' => 'Статья успешно удалена']);
     }
 }
