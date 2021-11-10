@@ -44,7 +44,7 @@ class ArticleCreated extends Notification
     {
         return (new MailMessage)
                     ->line('Создана новая статья ' . $this->article->name)
-                    ->action('Ссылка на статью: ', url('/articles/' . $this->article->id));
+                    ->action('Ссылка на статью: ', url(route('article', $this->article->id)));
     }
 
     /**

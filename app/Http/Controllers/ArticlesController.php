@@ -65,7 +65,7 @@ class ArticlesController extends Controller
 
         Notification::send(User::getAdmin(), new ArticleCreated($article));
 
-        return redirect('/')->with(['message' => 'Статья успешно создана']);
+        return redirect()->route('articles')->with(['message' => 'Статья успешно создана']);
     }
 
     /**
@@ -110,7 +110,7 @@ class ArticlesController extends Controller
 
         Notification::send(User::getAdmin(), new ArticleEdited($article));
 
-        return redirect('/')->with(['message' => 'Статья успешно изменена']);
+        return redirect()->route('articles')->with(['message' => 'Статья успешно изменена']);
 
     }
 
@@ -128,6 +128,6 @@ class ArticlesController extends Controller
 
         Notification::send(User::getAdmin(), new ArticleDeleted($article));
 
-        return redirect('/')->with(['message' => 'Статья успешно удалена']);
+        return redirect()->route('articles')->with(['message' => 'Статья успешно удалена']);
     }
 }

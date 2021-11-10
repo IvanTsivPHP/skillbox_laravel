@@ -23,7 +23,7 @@ app()->bind(TagsSynchronizer::class, function () {
     return new TagsSynchronizer();
 });
 
-Route::get('/',[ArticlesController::class, 'index']);
+Route::get('/',[ArticlesController::class, 'index'])->name('articles');
 
 Route::get('/about', [MainController::class, 'about']);
 
@@ -35,7 +35,7 @@ Route::get('/admin/feedback', [AdminController::class, 'feedback']);
 
 Route::get('/articles/create', [ArticlesController::class, 'create']);
 
-Route::get('/articles/{article}',[ArticlesController::class, 'show']);
+Route::get('/articles/{article}',[ArticlesController::class, 'show'])->name('article');
 
 Route::patch('/articles/{article}',[ArticlesController::class, 'update']);
 
