@@ -13,7 +13,6 @@ class NewArticles extends Mailable
     use Queueable, SerializesModels;
 
     public $articles;
-    public $route;
     /**
      * Create a new message instance.
      *
@@ -22,7 +21,6 @@ class NewArticles extends Mailable
     public function __construct(Collection $collection)
     {
         $this->articles = $collection;
-        $this->route = route('article', '');
     }
 
     /**

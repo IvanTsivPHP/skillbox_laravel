@@ -6,6 +6,7 @@ use App\Mail\NewArticles;
 use App\Models\Article;
 use App\Models\User;
 use App\Mail\NewAricles;
+use App\Services\ArticleService;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Mail;
@@ -42,24 +43,13 @@ class NewArticlesReport extends Command
     /**
      * Execute the console command.
      *
-     * @return int
+     * @param ArticleService $articleService
+     * @return void
      */
-    public function handle()
+    public function handle(ArticleService $articleService)
     {
-        if (!is_null($this->option('to'))) {
-            $upToDate = Carbon::createFromFormat('Y-m-d H:i:s', $this->option('to'));
-        } else {
-            $upToDate = Carbon::now();
-        }
+        $articles = $articleService->GetNewArticles($this->argument('from'), $this->option('to'));
 
-        $result = Article::where([
-            ['created_at', '>', $this->argument('from')],
-            ['created_at', '<', $upToDate],
-            ['published', true]
-        ])
-            ->get();
-
-        Mail::to(User::all())->send(New NewArticles($result));
-
+        Mail::to(User::whereNotNull('email_verified_at')->get()->all())->send(New NewArticles($articles));
     }
 }
