@@ -48,8 +48,10 @@ class NewArticlesReport extends Command
      */
     public function handle(ArticleService $articleService)
     {
-        $articles = $articleService->GetNewArticles($this->argument('from'), $this->option('to'));
-
-        Mail::to(User::whereNotNull('email_verified_at')->get()->all())->send(New NewArticles($articles));
+        Mail::to(User::cursor()->all())
+            ->send(New NewArticles($articleService->GetNewArticles(
+                $this->argument('from'),
+                $this->option('to')
+            )));
     }
 }
