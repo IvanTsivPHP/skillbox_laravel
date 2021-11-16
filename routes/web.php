@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ArticlesController;
 use App\Http\Controllers\MainController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\Admin\ArticlesController as AdminArticlesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,7 +23,7 @@ app()->bind(TagsSynchronizer::class, function () {
     return new TagsSynchronizer();
 });
 
-Route::get('/',[ArticlesController::class, 'index']);
+Route::get('/',[ArticlesController::class, 'index'])->name('articles');
 
 Route::get('/about', [MainController::class, 'about']);
 
@@ -34,7 +35,7 @@ Route::get('/admin/feedback', [AdminController::class, 'feedback']);
 
 Route::get('/articles/create', [ArticlesController::class, 'create']);
 
-Route::get('/articles/{article}',[ArticlesController::class, 'show']);
+Route::get('/articles/{article}',[ArticlesController::class, 'show'])->name('article');
 
 Route::patch('/articles/{article}',[ArticlesController::class, 'update']);
 
@@ -49,3 +50,17 @@ Route::get('/tags/{tag}', [TagsController::class, 'index']);
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Route::get('/admin/', [AdminArticlesController::class, 'index'])->name('admin');
+
+Route::get('/admin/articles/create', [AdminArticlesController::class, 'create']);
+
+Route::get('/admin/articles/{article}',[AdminArticlesController::class, 'show']);
+
+Route::patch('/admin/articles/{article}',[AdminArticlesController::class, 'update']);
+
+Route::delete('/admin/articles/{article}',[AdminArticlesController::class, 'destroy']);
+
+Route::get('/admin/articles/{article}/edit',[AdminArticlesController::class, 'edit']);
+
+Route::post('/admin/articles', [AdminArticlesController::class, 'store']);

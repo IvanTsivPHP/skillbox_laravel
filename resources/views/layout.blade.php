@@ -87,7 +87,9 @@
                 @endguest
             </div>
         </div>
-        @include('main')
+        @section('menu')
+            @include('layouts.mainMenu')
+        @show
     </header>
     <div class="row g-5">
         <div class="col-md-8">

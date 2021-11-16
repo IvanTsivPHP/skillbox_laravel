@@ -14,7 +14,11 @@
             @endforeach
             <hr>
             <p><a href="/" class="btn btn-primary">На главную</a></p>
-            <p><a href="/articles/{{ $article->id }}/edit" class="btn btn-primary"> Редактировать</a></p>
+            @if(LoginAdmin())
+                <p><a href="/admin/articles/{{ $article->id }}/edit" class="btn btn-primary"> Редактировать</a></p>
+            @else
+                <p><a href="/articles/{{ $article->id }}/edit" class="btn btn-primary"> Редактировать</a></p>
+            @endif
             <form action="/articles/{{ $article->id }}" method="POST">
                 @csrf
                 @method('DELETE')

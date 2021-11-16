@@ -44,7 +44,7 @@ class ArticleEdited extends Notification
     {
         return (new MailMessage)
                     ->line('Статья ' . $this->article->name . ' была отредактирована.')
-                    ->action('Ссылка на статью: ', url('/articles/' . $this->article->id));
+                    ->action('Ссылка на статью: ', url(route('article', $this->article->id)));
     }
 
     /**
