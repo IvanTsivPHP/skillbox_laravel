@@ -7,5 +7,5 @@ if (! function_exists('LoginAdmin')) {
         return (\Illuminate\Support\Facades\Auth::user() && \Illuminate\Support\Facades\Auth::user()->isAdmin());
 
     }
-
 }
+
