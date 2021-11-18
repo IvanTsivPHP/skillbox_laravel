@@ -47,7 +47,6 @@ class ArticlesController extends Controller
      *
      * @param ArticleFormRequest $request
      * @param TagsSynchronizer $tagsSynchronizer
-     * @param PushallService $pushall
      * @return void
      */
     public function store(ArticleFormRequest $request, TagsSynchronizer $tagsSynchronizer)
