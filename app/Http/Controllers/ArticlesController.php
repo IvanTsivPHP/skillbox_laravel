@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Notifications\ArticleCreated;
 use App\Notifications\ArticleDeleted;
 use App\Notifications\ArticleEdited;
+use App\Services\PushallService;
 use App\Services\TagsSynchronizer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Notification;
@@ -45,8 +46,9 @@ class ArticlesController extends Controller
      * Store a newly created resource in storage.
      *
      * @param ArticleFormRequest $request
-     * @param TagsSynchronizer $synchronizer
-     * @return \Illuminate\Http\Response
+     * @param TagsSynchronizer $tagsSynchronizer
+     * @param PushallService $pushall
+     * @return void
      */
     public function store(ArticleFormRequest $request, TagsSynchronizer $tagsSynchronizer)
     {
