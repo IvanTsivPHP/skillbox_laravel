@@ -2,36 +2,21 @@
 
 namespace App\Channels;
 
-use App\Services\PushallService;
 use Illuminate\Notifications\Notification;
+use platx\pushall\PushAll;
+
 
 class PushallChannel
 {
-    private $id;
-    private $apiKey;
+    private $pushAll;
 
-    public function __construct()
+    public function __construct(PushAll $pushAll)
     {
-        $this->id = config('pushall.id');
-        $this->apiKey = config('pushall.key');
+        $this->pushAll = $pushAll;
     }
 
     public function send($notifiable, Notification $notification)
     {
-        $data = [
-            "type" => "self",
-            "id" => $this->id,
-            "key" => $this->apiKey,
-        ];
-
-        $data = $data + $notification->toPushall($notifiable);
-
-        curl_setopt_array($ch = curl_init(), array(
-            CURLOPT_URL => "https://pushall.ru/api.php",
-            CURLOPT_POSTFIELDS => $data,
-            CURLOPT_RETURNTRANSFER => true
-        ));
-        $return=curl_exec($ch); //получить ответ или ошибку
-        curl_close($ch);
+        $this->pushAll->send($notification->toPushall($notifiable));
     }
 }
