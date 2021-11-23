@@ -7,6 +7,7 @@ use App\View\Components\Admin;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\View\View;
+use platx\pushall\PushAll;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -17,7 +18,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $this->app->bind(PushAll::class, function () {
+            return new PushAll(config('pushall.id'), config('pushall.key'));
+        });
     }
 
     /**

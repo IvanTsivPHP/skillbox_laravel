@@ -2,6 +2,7 @@
 
 namespace App\Notifications;
 
+use App\Channels\PushallChannel;
 use App\Models\Article;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -31,7 +32,10 @@ class ArticleCreated extends Notification
      */
     public function via($notifiable)
     {
-        return ['mail'];
+        return [
+            'mail',
+            PushallChannel::class
+        ];
     }
 
     /**
@@ -45,6 +49,15 @@ class ArticleCreated extends Notification
         return (new MailMessage)
                     ->line('Создана новая статья ' . $this->article->name)
                     ->action('Ссылка на статью: ', url(route('article', $this->article->id)));
+    }
+
+    public function toPushall($notifiable)
+    {
+        return [
+            'title' => 'Создана новая статья',
+            'text' => $this->article->name,
+            'url' => url(route('article', $this->article->id))
+        ];
     }
 
     /**
