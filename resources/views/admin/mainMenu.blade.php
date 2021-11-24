@@ -2,6 +2,7 @@
     <nav class="nav d-flex justify-content-between">
         <a class="p-2 link-secondary" href="/admin/">Все статьи</a>
         <a class="p-2 link-secondary" href="/admin/feedback">Отзывы</a>
+        <a class="p-2 link-secondary" href="/admin/news">Новости</a>
         <a class="p-2 link-secondary" href="/">На главную</a>
     </nav>
 </div>

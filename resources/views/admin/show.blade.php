@@ -2,6 +2,10 @@
 
 @section('title', $article->name)
 
+@section('menu')
+    @include('admin.mainMenu')
+@endsection
+
 @section('content')
     <div class="col-md-8">
         <article class="blog-post">

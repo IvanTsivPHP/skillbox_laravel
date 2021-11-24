@@ -14,8 +14,9 @@ class TestSeeder extends Seeder
     public function run()
     {
         $this->call([
-           TestUserSeeder::class,
-           TestArticleSeeder::class
+            TestUserSeeder::class,
+            TestArticleSeeder::class,
+            TestNewsSeeder::class
         ]);
     }
 }
