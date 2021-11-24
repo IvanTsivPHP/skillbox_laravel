@@ -64,3 +64,5 @@ Route::delete('/admin/articles/{article}',[AdminArticlesController::class, 'dest
 Route::get('/admin/articles/{article}/edit',[AdminArticlesController::class, 'edit']);
 
 Route::post('/admin/articles', [AdminArticlesController::class, 'store']);
+
+Route::post('/comments/create', [\App\Http\Controllers\CommentsController::class, 'store']);

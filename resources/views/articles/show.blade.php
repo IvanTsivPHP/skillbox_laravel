@@ -27,4 +27,6 @@
         </article>
     </div>
 
+    @include('comments.show')
+
 @endsection

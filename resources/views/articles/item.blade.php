@@ -5,4 +5,5 @@
     <p>{{ $article->description }}</p>
     <hr>
 </article>
+<br>
 
