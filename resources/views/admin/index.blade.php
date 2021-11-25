@@ -19,4 +19,5 @@
         @include('admin.item', ['article' => $article])
     @endforeach
 
+    {{ $articles->onEachSide(1)->links() }}
 @endsection

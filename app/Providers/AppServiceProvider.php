@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Models\Tag;
 use App\View\Components\Admin;
+use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\View\View;
@@ -35,5 +36,6 @@ class AppServiceProvider extends ServiceProvider
         });
 
         Blade::component('admin', Admin::class);
+        Paginator::defaultView('pagination::default');
     }
 }
