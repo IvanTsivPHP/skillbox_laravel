@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "71c6241331452f5aa48dab5db5dff135",
+    "content-hash": "6580f7520584ba2fa7d8d9efef66aec8",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -2039,16 +2039,16 @@
         },
         {
             "name": "nette/utils",
-            "version": "v3.2.5",
+            "version": "v3.2.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nette/utils.git",
-                "reference": "9cd80396ca58d7969ab44fc7afcf03624dfa526e"
+                "reference": "2f261e55bd6a12057442045bf2c249806abc1d02"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nette/utils/zipball/9cd80396ca58d7969ab44fc7afcf03624dfa526e",
-                "reference": "9cd80396ca58d7969ab44fc7afcf03624dfa526e",
+                "url": "https://api.github.com/repos/nette/utils/zipball/2f261e55bd6a12057442045bf2c249806abc1d02",
+                "reference": "2f261e55bd6a12057442045bf2c249806abc1d02",
                 "shasum": ""
             },
             "require": {
@@ -2059,7 +2059,7 @@
             },
             "require-dev": {
                 "nette/tester": "~2.0",
-                "phpstan/phpstan": "^0.12",
+                "phpstan/phpstan": "^1.0",
                 "tracy/tracy": "^2.3"
             },
             "suggest": {
@@ -2118,9 +2118,9 @@
             ],
             "support": {
                 "issues": "https://github.com/nette/utils/issues",
-                "source": "https://github.com/nette/utils/tree/v3.2.5"
+                "source": "https://github.com/nette/utils/tree/v3.2.6"
             },
-            "time": "2021-09-20T10:50:11+00:00"
+            "time": "2021-11-24T15:47:23+00:00"
         },
         {
             "name": "nikic/php-parser",
@@ -2242,72 +2242,6 @@
                 "source": "https://github.com/opis/closure/tree/3.6.2"
             },
             "time": "2021-04-09T13:42:10+00:00"
-        },
-        {
-            "name": "panoscape/history",
-            "version": "2.3.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/seancheung/history.git",
-                "reference": "10b7c6179ae15550f1c3a81fd11920f781c5ed9d"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/seancheung/history/zipball/10b7c6179ae15550f1c3a81fd11920f781c5ed9d",
-                "reference": "10b7c6179ae15550f1c3a81fd11920f781c5ed9d",
-                "shasum": ""
-            },
-            "require": {
-                "illuminate/support": "^6.0|^7.0|^8.0",
-                "php": "^7.2|^7.2.5|^7.3|^8.0"
-            },
-            "require-dev": {
-                "mockery/mockery": "^1.2",
-                "orchestra/testbench": "^4.8|^5.2|^6.2",
-                "php-coveralls/php-coveralls": "^2.1",
-                "phpunit/phpunit": "^8.3|^8.4|^9.0"
-            },
-            "type": "library",
-            "extra": {
-                "laravel": {
-                    "providers": [
-                        "Panoscape\\History\\HistoryServiceProvider"
-                    ],
-                    "aliases": {
-                        "History": "Panoscape\\History\\History"
-                    }
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Panoscape\\History\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Sean Cheung",
-                    "email": "theoxuanx@gmail.com"
-                }
-            ],
-            "description": "Eloquent model history tracking for Laravel",
-            "homepage": "https://github.com/seancheung/history",
-            "keywords": [
-                "eloquent",
-                "history",
-                "laravel",
-                "log",
-                "model",
-                "tracking"
-            ],
-            "support": {
-                "issues": "https://github.com/seancheung/history/issues",
-                "source": "https://github.com/seancheung/history/tree/2.3.0"
-            },
-            "time": "2021-09-22T08:58:08+00:00"
         },
         {
             "name": "phpoption/phpoption",
@@ -5871,16 +5805,16 @@
         },
         {
             "name": "facade/ignition",
-            "version": "2.17.0",
+            "version": "2.17.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/facade/ignition.git",
-                "reference": "28d12b473ffcbe326959385772fd5125c73bc974"
+                "reference": "317f6110c1977b50e06365bbb155fbe5079035ec"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/facade/ignition/zipball/28d12b473ffcbe326959385772fd5125c73bc974",
-                "reference": "28d12b473ffcbe326959385772fd5125c73bc974",
+                "url": "https://api.github.com/repos/facade/ignition/zipball/317f6110c1977b50e06365bbb155fbe5079035ec",
+                "reference": "317f6110c1977b50e06365bbb155fbe5079035ec",
                 "shasum": ""
             },
             "require": {
@@ -5945,7 +5879,7 @@
                 "issues": "https://github.com/facade/ignition/issues",
                 "source": "https://github.com/facade/ignition"
             },
-            "time": "2021-11-24T08:47:21+00:00"
+            "time": "2021-11-25T10:26:30+00:00"
         },
         {
             "name": "facade/ignition-contracts",
@@ -8076,7 +8010,6 @@
                     "type": "github"
                 }
             ],
-            "abandoned": true,
             "time": "2020-09-28T06:45:17+00:00"
         },
         {
