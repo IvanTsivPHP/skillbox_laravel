@@ -20,7 +20,7 @@ if (! function_exists('CamelToArray')) {
 if (! function_exists('CollectTrimmed')) {
     function CollectTrimmed($text) {
 
-        return collect(explode(',', trim($text)));
+        return collect(array_map('trim', explode(',', $text)));
     }
 }
 
