@@ -67,6 +67,8 @@ Route::get('/admin/articles/{article}/edit',[AdminArticlesController::class, 'ed
 
 Route::post('/admin/articles', [AdminArticlesController::class, 'store']);
 
+Route::post('/comments/create', [\App\Http\Controllers\CommentsController::class, 'store']);
+
 Route::get('/admin/news', [AdminNewsController::class, 'index'])->name('adminNews');
 
 Route::get('/admin/news/{news}/edit', [AdminNewsController::class, 'edit']);
@@ -82,3 +84,4 @@ Route::post('/admin/news', [AdminNewsController::class, 'store']);
 Route::get('/news', [NewsController::class, 'index']);
 
 Route::get('/news/{news}', [NewsController::class, 'show']);
+
