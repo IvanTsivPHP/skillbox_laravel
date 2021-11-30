@@ -100,14 +100,7 @@ class StatisticsService
 
     public function getMostChangedArticle()
     {
-        $data = DB::table('articles')
-            ->select("users.name", DB::raw("count(articles.id) as total"))
-            ->join('articles', 'users.id', '=', 'articles.owner_id')
-            ->where('published', '=', true)
-            ->groupBy("articles.owner_id")
-            ->orderBy('total', 'DESC')
-            ->pluck('name')
-            ->first();
+
 
     }
 
