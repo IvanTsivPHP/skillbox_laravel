@@ -67,6 +67,7 @@ Route::get('/contacts', [MainController::class, 'contacts']);
 
 Route::post('/contacts', [MainController::class, 'sendFeedback']);
 
+Route::post('/comments/create', [\App\Http\Controllers\CommentsController::class, 'store']);
 
 Route::prefix('articles')->group(function () {
 

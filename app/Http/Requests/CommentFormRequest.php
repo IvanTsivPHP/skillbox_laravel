@@ -4,9 +4,8 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Validation\Rule;
 
-class ArticleFormRequest extends FormRequest
+class CommentFormRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,11 +25,7 @@ class ArticleFormRequest extends FormRequest
     public function rules()
     {
         return [
-            'code' => 'required|regex:/^[a-zA-Z0-9_\-]*$/|unique:articles,code,' . $this->id,
-            'name' => 'required|min:5|max:100',
-            'description' => 'required|max:225',
-            'body' => 'required',
-            'tags' => 'nullable|string'
+            'text' => 'required'
         ];
     }
 }

@@ -6,4 +6,5 @@
     @include('layouts.tagsBar', ['tags' => $article->tags])
     <hr>
 </article>
+<br>
 
