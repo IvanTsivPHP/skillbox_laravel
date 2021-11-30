@@ -27,6 +27,7 @@ class NewsFormRequest extends FormRequest
         return [
             'name' => 'required|min:5|max:100',
             'body' => 'required',
+            'tags' => 'nullable|string'
         ];
     }
 }
