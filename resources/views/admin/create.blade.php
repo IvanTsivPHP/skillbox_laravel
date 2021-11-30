@@ -2,6 +2,10 @@
 
 @section('title', isset($article)?'Редактировать статью':'Новая статья')
 
+@section('menu')
+    @include('admin.mainMenu')
+@endsection
+
 @section('content')
     @if($errors->count())
     <div class="alert alert-danger mt-4">

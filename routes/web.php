@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\NewsController;
 use App\Http\Controllers\TagsController;
 use App\Services\TagsSynchronizer;
 use Illuminate\Support\Facades\Auth;
@@ -8,6 +9,7 @@ use App\Http\Controllers\ArticlesController;
 use App\Http\Controllers\MainController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Admin\ArticlesController as AdminArticlesController;
+use App\Http\Controllers\Admin\NewsController as AdminNewsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -66,3 +68,20 @@ Route::get('/admin/articles/{article}/edit',[AdminArticlesController::class, 'ed
 Route::post('/admin/articles', [AdminArticlesController::class, 'store']);
 
 Route::post('/comments/create', [\App\Http\Controllers\CommentsController::class, 'store']);
+
+Route::get('/admin/news', [AdminNewsController::class, 'index'])->name('adminNews');
+
+Route::get('/admin/news/{news}/edit', [AdminNewsController::class, 'edit']);
+
+Route::get('/admin/news/create', [AdminNewsController::class, 'create']);
+
+Route::patch('/admin/news/{news}', [AdminNewsController::class, 'update']);
+
+Route::delete('/admin/news/{news}', [AdminNewsController::class, 'destroy']);
+
+Route::post('/admin/news', [AdminNewsController::class, 'store']);
+
+Route::get('/news', [NewsController::class, 'index']);
+
+Route::get('/news/{news}', [NewsController::class, 'show']);
+
