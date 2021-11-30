@@ -61,7 +61,7 @@ class ArticlesController extends Controller
         $article->owner_id= auth()->id();
         $article->save();
 
-        $tags = collect(explode(',', trim($request['tags'])));
+        $tags = CollectTrimmed($request['tags']);
         $tagsSynchronizer->sync($tags, $article);
 
         Notification::send(User::getAdmin(), new ArticleCreated($article));

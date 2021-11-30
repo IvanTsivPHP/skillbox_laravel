@@ -53,7 +53,7 @@ class NewsController extends Controller
 
         $news->save();
 
-        $tags = collect(explode(',', trim($request['tags'])));
+        $tags = CollectTrimmed($request['tags']);
         $tagsSynchronizer->sync($tags, $news);
 
         return redirect()->route('adminNews')->with(['message' => 'Новость успешно создана']);
