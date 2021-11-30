@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\NewsController;
+use App\Http\Controllers\StatsController;
 use App\Http\Controllers\TagsController;
 use App\Services\TagsSynchronizer;
 use Illuminate\Support\Facades\Auth;
@@ -92,3 +93,5 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::get('/news', [NewsController::class, 'index']);
 
 Route::get('/news/{news}', [NewsController::class, 'show']);
+
+Route::get('/statistics', [StatsController::class, 'index']);
