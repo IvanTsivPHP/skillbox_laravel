@@ -65,8 +65,7 @@ class ArticlesController extends Controller
         $article->published = isset($request['published']);
         $article->update();
 
-        $tags = CollectTrimmed($request['tags']);
-        $synchronizer->sync($tags, $article);
+        $synchronizer->sync($request['tags'], $article);
 
         Notification::send(User::getAdmin(), new ArticleEdited($article));
 

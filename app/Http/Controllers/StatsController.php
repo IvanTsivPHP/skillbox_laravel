@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Services\StatisticsService;
+
+use App\Services\Statistics\StatisticsService;
 use Illuminate\Http\Request;
 
 class StatsController extends Controller

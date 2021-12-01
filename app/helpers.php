@@ -16,11 +16,3 @@ if (! function_exists('CamelToArray')) {
         return preg_split($reg, $text);
     }
 }
-
-if (! function_exists('CollectTrimmed')) {
-    function CollectTrimmed($text) {
-
-        return collect(array_map('trim', explode(',', $text)));
-    }
-}
-
