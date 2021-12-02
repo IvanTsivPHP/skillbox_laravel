@@ -6,89 +6,90 @@ use Illuminate\Support\Facades\DB;
 
 class StatisticsService
 {
-    private $result;
-
     public function run()
     {
+        $result = collect();
+
         foreach (get_class_methods($this) as $method) {
             if (CamelToArray($method)[0] == 'get') {
-                $this->$method(StatCollectorService::$method());
+                $result->put($method, $this->$method());
             }
         }
 
-        return $this->result;
+        return $result;
     }
 
-    private function toResult($title, $text, $href = null)
+    public static function getTotalPublishedArticles()
     {
-        $this->result[] = [
-            'title' => $title,
-            'text' => $text,
-            'href' => $href
-        ];
+        return DB::table('articles')->where('published', true)->count();
     }
 
-    public function getTotalPublishedArticles($data)
+    public static function getTotalPublishedNews()
     {
-        $this->toResult('Всего статей', $data);
+        return DB::table('news')->where('published', true)->count();
     }
 
-    public function getTotalPublishedNews($data)
+    public static function getAuthorWithMostArticles()
     {
-        $this->toResult('Всего новостей', $data);
+        return DB::table('users')
+            ->select('users.name', DB::raw('count(articles.id) as total'))
+            ->join('articles', 'users.id', '=', 'articles.owner_id')
+            ->where('published', '=', true)
+            ->groupBy('articles.owner_id')
+            ->orderBy('total', 'DESC')
+            ->pluck('name')
+            ->first();
     }
 
-    public function getAuthorWithMostArticles($data)
+    public static function getBiggestArticle()
     {
-        $this->toResult('Самый плодовитый автор', $data);
+        return (DB::table('articles')
+            ->select('name', 'id', DB::raw('LENGTH(body) as len'))
+            ->orderBy('len', 'DESC')
+            ->first());
     }
 
-    public function getBiggestArticle($data)
+    public static function getSmallestArticle()
     {
-        if (!is_null($data)) {
-            $this->toResult(
-                'Самая большая статья ' . $data->len . ' символов',
-                $data->name,
-                route('article', $data->id)
-            );
-        }
+        return (DB::table('articles')
+            ->select('name', 'id', DB::raw('LENGTH(body) as len'))
+            ->orderBy('len', 'ASC')
+            ->first());
     }
 
-    public function getSmallestArticle($data)
+
+    public static function getAverageArticlePerActiveUser()
     {
-        if (!is_null($data)) {
-            $this->toResult(
-                'Самая маленькая статья ' . $data->len . ' символов',
-                $data->name,
-                route('article', $data->id)
-            );
-        }
+        return DB::table('users')
+            ->select('users.name', DB::raw('count(articles.id) as total'))
+            ->join('articles', 'users.id', '=', 'articles.owner_id')
+            ->where('published', '=', true)
+            ->groupBy('articles.owner_id')
+            ->orderBy('total', 'DESC')
+            ->pluck('total')
+            ->average();
     }
 
-
-    public function getAverageArticlePerActiveUser($data)
+    public static function getMostChangedArticle()
     {
-        $this->toResult('В среднем статей на автора', $data);
+        return DB::table('articles')
+            ->select('articles.name', 'articles.id', DB::raw('count(article_histories.id) as total'))
+            ->join('article_histories', 'articles.id', '=', 'article_histories.article_id')
+            ->where('published', '=', true)
+            ->groupBy('article_histories.article_id')
+            ->orderBy('total', 'DESC')
+            ->first();
     }
 
-    public function getMostChangedArticle($data)
+    public static function getMostDiscussedArticle()
     {
-        if (!is_null($data)) {
-            $this->toResult(
-                'Самая изменяемая статья',
-                $data->name,
-                route('article', $data->id)
-            );
-        }
+        return DB::table('articles')
+            ->select('articles.name', 'articles.id', DB::raw('count(comments.id) as total'))
+            ->join('comments', 'articles.id', '=', 'comments.article_id')
+            ->where('published', '=', true)
+            ->groupBy('comments.article_id')
+            ->orderBy('total', 'DESC')
+            ->first();
     }
 
-    public function getMostDiscussedArticle($data)
-    {
-        if (!is_null($data)) {
-            $this->toResult(
-                'Самая обсуждаемая',
-                $data->name,
-                route('article', $data->id));
-        }
-    }
 }

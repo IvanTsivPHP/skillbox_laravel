@@ -5,10 +5,7 @@
 @section('content')
     <table class="table table-striped">
         <tbody>
-    @foreach( $stats as $stat)
-        @include('stats.item', ['stat' => $stat])
-    @endforeach
-
+        @include('stats.items')
         </tbody>
     </table>
 
