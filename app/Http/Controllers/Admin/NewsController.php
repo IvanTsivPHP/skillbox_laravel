@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\NewsFormRequest;
 use App\Models\News;
+use App\Services\TagsSynchronizer;
 
 class NewsController extends Controller
 {
@@ -38,9 +39,10 @@ class NewsController extends Controller
      * Store a newly created resource in storage.
      *
      * @param NewsFormRequest $request
+     * @param TagsSynchronizer $tagsSynchronizer
      * @return void
      */
-    public function store(NewsFormRequest $request)
+    public function store(NewsFormRequest $request, TagsSynchronizer $tagsSynchronizer)
     {
         $news = new News();
 
@@ -50,6 +52,8 @@ class NewsController extends Controller
         $news->owner_id= auth()->id();
 
         $news->save();
+
+        $tagsSynchronizer->sync($request['tags'], $news);
 
         return redirect()->route('adminNews')->with(['message' => 'Новость успешно создана']);
     }
@@ -64,9 +68,10 @@ class NewsController extends Controller
      *
      * @param NewsFormRequest $request
      * @param News $news
+     * @param TagsSynchronizer $tagsSynchronizer
      * @return void
      */
-    public function update(NewsFormRequest $request, News $news)
+    public function update(NewsFormRequest $request, News $news, TagsSynchronizer $tagsSynchronizer)
     {
         $news->name = $request['name'];
         $news->body = $request['body'];
@@ -74,6 +79,9 @@ class NewsController extends Controller
         $news->owner_id= auth()->id();
 
         $news->update();
+
+        $tags = collect(explode(',', trim($request['tags'])));
+        $tagsSynchronizer->sync($tags, $news);
 
         return redirect()->route('adminNews')->with(['message' => 'Новость успешно отредактирована']);
     }

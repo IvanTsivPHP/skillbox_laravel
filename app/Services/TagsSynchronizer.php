@@ -9,8 +9,10 @@ use Illuminate\Support\Collection;
 
 class TagsSynchronizer
 {
-    public function sync(Collection $tags, Model $model)
+    public function sync($tagsText, Model $model)
     {
+        $tags = collect(array_map('trim', explode(',', $tagsText)));
+
         foreach ($tags as $tag) {
            $validTag =  Tag::firstOrCreate(['name' => $tag]);
            $validTagId[] = $validTag->id;

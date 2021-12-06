@@ -9,3 +9,10 @@ if (! function_exists('LoginAdmin')) {
     }
 }
 
+if (! function_exists('CamelToArray')) {
+    function CamelToArray($text) {
+        $reg = '/(?<=[a-z])(?=[A-Z])/x';
+
+        return preg_split($reg, $text);
+    }
+}
