@@ -3,6 +3,7 @@
         <a class="p-2 link-secondary" href="/admin/">Все статьи</a>
         <a class="p-2 link-secondary" href="/admin/feedback">Отзывы</a>
         <a class="p-2 link-secondary" href="/admin/news">Новости</a>
+        <a class="p-2 link-secondary" href="/admin/reports">Отчеты</a>
         <a class="p-2 link-secondary" href="/">На главную</a>
     </nav>
 </div>
