@@ -7,6 +7,7 @@ use App\Models\Article;
 use App\Models\News;
 use App\Models\Tag;
 use App\Models\User;
+use App\Services\ReportGenerateService;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -42,33 +43,12 @@ class SendStatisticsReport implements ShouldQueue
      */
     public function handle()
     {
-        $items = array_keys($this->params);
-        foreach ($items as $item) {
-            $method = 'get' . $item;
-            $result[$item] = $this->$method();
-        }
+
+       $report = new ReportGenerateService;
+
+       $result = $report->run($this->params);
 
         Mail::to($this->email)
             ->send(new StatsReport($result));
-    }
-
-    private function getTotalNews()
-    {
-        return News::published()->count();
-    }
-
-    private function getTotalArticles()
-    {
-        return Article::published()->count();
-    }
-
-    private function getTotalUsers()
-    {
-        return User::all()->count();
-    }
-
-    private function getTotalTags()
-    {
-        return Tag::all()->count();
     }
 }

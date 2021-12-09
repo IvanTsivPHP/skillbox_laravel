@@ -60,7 +60,7 @@ Route::prefix('admin')->group(function () {
 
     Route::get('/reports', [ReportsController::class, 'index']);
 
-    Route::get('/reports/make', [ReportsController::class, 'make']);
+    Route::post('/reports/make', [ReportsController::class, 'make']);
 
 });
 
