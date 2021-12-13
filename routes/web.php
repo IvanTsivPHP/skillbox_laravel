@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\ReportsController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\StatsController;
 use App\Http\Controllers\TagsController;
@@ -56,6 +57,10 @@ Route::prefix('admin')->group(function () {
     Route::delete('/news/{news}', [AdminNewsController::class, 'destroy']);
 
     Route::post('/news', [AdminNewsController::class, 'store']);
+
+    Route::get('/reports', [ReportsController::class, 'index']);
+
+    Route::post('/reports/make', [ReportsController::class, 'make']);
 
 });
 
