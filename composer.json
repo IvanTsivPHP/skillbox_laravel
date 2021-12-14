@@ -14,6 +14,7 @@
         "laravel/tinker": "^2.5",
         "laravel/ui": "^3.3",
         "platx/pushall": "dev-master",
+        "predis/predis": "^1.1",
         "twbs/bootstrap": "5.0.2"
     },
     "require-dev": {

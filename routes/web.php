@@ -101,3 +101,12 @@ Route::get('/news', [NewsController::class, 'index']);
 Route::get('/news/{news}', [NewsController::class, 'show']);
 
 Route::get('/statistics', [StatsController::class, 'index']);
+
+Route::get('/test', function() {
+  return view('test');
+});
+
+Route::get('/test/run', function () {
+    event(new \App\Events\TestEvent('Wololo'));
+    dd('Event fired.');
+});
