@@ -11,4 +11,8 @@
             </div>
         </div>
     </div>
+
+    @section('notifications')
+        @include('layouts.notificationsBar')
+    @show
 </div>

@@ -10,19 +10,29 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class TestEvent implements ShouldBroadcast
+class ChangedArticleEvent implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    private $var;
-    public function __construct($var)
+    private $data;
+
+    public function __construct($data)
     {
-        $this->var = $var;
+        $this->data = $data;
     }
 
     public function broadcastOn()
     {
-        return new Channel('test');
+        return new PrivateChannel('test');
     }
 
+    public function broadcastAs()
+    {
+        return 'NewTestEvent';
+    }
+
+    public function broadcastWith()
+    {
+        return $this->data;
+    }
 }

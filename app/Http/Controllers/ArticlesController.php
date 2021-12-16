@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\ChangedArticleEvent;
 use App\Http\Requests\ArticleFormRequest;
 use App\Models\Article;
 use App\Models\User;
 use App\Notifications\ArticleCreated;
 use App\Notifications\ArticleDeleted;
 use App\Notifications\ArticleEdited;
+use App\Services\Notifications\ArticleChangesService;
 use App\Services\PushallService;
 use App\Services\TagsSynchronizer;
 use Illuminate\Http\Request;
@@ -57,13 +59,16 @@ class ArticlesController extends Controller
         $article->name = $request['name'];
         $article->description = $request['description'];
         $article->body = $request['body'];
-        $article->published = isset($request['published']);
+        $article->published = isset($request['published'])?1:0;
         $article->owner_id= auth()->id();
         $article->save();
 
         $tagsSynchronizer->sync($request['tags'], $article);
 
         Notification::send(User::getAdmin(), new ArticleCreated($article));
+
+        $serv = new ArticleChangesService($article);
+        event(new ChangedArticleEvent($serv->run()));
 
         return redirect()->route('articles')->with(['message' => 'Статья успешно создана']);
     }
@@ -102,7 +107,7 @@ class ArticlesController extends Controller
         $article->name = $request['name'];
         $article->description = $request['description'];
         $article->body = $request['body'];
-        $article->published = isset($request['published']);
+        $article->published = isset($request['published'])?1:0;
         $article->update();
 
         $tags = collect(explode(',', trim($request['tags'])));
@@ -110,6 +115,7 @@ class ArticlesController extends Controller
 
         Notification::send(User::getAdmin(), new ArticleEdited($article));
 
+        event(new ChangedArticleEvent($article));
         return redirect()->route('articles')->with(['message' => 'Статья успешно изменена']);
 
     }

@@ -78,6 +78,7 @@
         @section('menu')
             @include('layouts.mainMenu')
         @show
+
     </header>
     <div class="row g-5">
         <div class="col-md-8">
@@ -86,8 +87,6 @@
         @section('sidebar')
             @include('layouts.sidebar')
         @show
-
-
     </div>
 </main>
 </body>
