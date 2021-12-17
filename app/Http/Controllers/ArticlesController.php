@@ -13,6 +13,7 @@ use App\Services\Notifications\ArticleChangesService;
 use App\Services\PushallService;
 use App\Services\TagsSynchronizer;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Notification;
 
 
@@ -30,7 +31,10 @@ class ArticlesController extends Controller
      */
     public function index()
     {
-        $articles =  Article::with('tags')->published()->latest()->paginate(10);
+        $articles = Cache::tags(['articles'])->remember('users_articles|' . auth()->id(), '3600', function (){
+            return Article::with('tags')->published()->latest()->paginate(10);
+        });
+
         return view('articles.index', compact('articles'));
     }
 
@@ -80,8 +84,12 @@ class ArticlesController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show(Article $article)
-    {
-        return view('articles.show', compact('article'));
+    {;
+        return Cache::tags(['article' . $article->id])
+            ->remember('users_article' . $article->id . '|' . auth()->id(), '3600', function () use($article) {
+            return view('articles.show', compact('article'))->render();
+        });
+
     }
 
     public function edit(Article $article)

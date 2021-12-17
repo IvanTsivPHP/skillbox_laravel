@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Cache;
 
 
 class Article extends Model
@@ -21,6 +22,19 @@ class Article extends Model
                 'old' => json_encode(Arr::only($article->fresh()->toArray(), array_keys($new))),
                 'new' => json_encode($new)
                 ]);
+            Cache::tags(['article' . $article->id])->flush();
+        });
+
+        static::updated(function () {
+            Cache::tags(['articles'])->flush();
+        });
+
+        static::created(function () {
+            Cache::tags(['articles'])->flush();
+        });
+
+        static::deleted(function () {
+            Cache::tags(['articles'])->flush();
         });
     }
 
