@@ -13,6 +13,7 @@ use App\Notifications\ArticleEdited;
 use App\Services\Notifications\ArticleChangesService;
 use App\Services\TagsSynchronizer;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Notification;
 
 
@@ -30,7 +31,10 @@ class ArticlesController extends Controller
      */
     public function index()
     {
-        $articles =  Article::with('tags')->latest()->paginate(20);
+        $articles = Cache::tags(['articles'])->remember('admins_articles|' . auth()->id(), '3600', function (){
+            return Article::with('tags')->latest()->paginate(20);
+        });
+
         return view('admin.index', compact('articles'));
     }
 
@@ -42,7 +46,10 @@ class ArticlesController extends Controller
      */
     public function show(Article $article)
     {
-        return view('admin.show', compact('article'));
+        return Cache::tags(['article' . $article->id])
+            ->remember('admins_article' . $article->id . '|' . auth()->id(), '3600', function () use($article) {
+                return view('admin.show', compact('article'))->render();
+            });
     }
 
     public function edit(Article $article)

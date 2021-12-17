@@ -2,6 +2,7 @@
 
 namespace App\Services\Statistics;
 
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 
 class StatisticsService
@@ -16,7 +17,10 @@ class StatisticsService
             }
         }
 
-        return $result;
+        return Cache::tags(['news', 'articles', 'tags'])
+            ->remember('users_stats|' . auth()->id(), '3600', function () use($result) {
+            return $result;
+        });
     }
 
     public static function getTotalPublishedArticles()

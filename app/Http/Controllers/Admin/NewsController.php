@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\NewsFormRequest;
 use App\Models\News;
 use App\Services\TagsSynchronizer;
+use Illuminate\Support\Facades\Cache;
 
 class NewsController extends Controller
 {
@@ -21,7 +22,10 @@ class NewsController extends Controller
      */
     public function index()
     {
-        $news =  News::published()->latest()->paginate(20);
+        $news = Cache::tags(['news'])->remember('admin_news|' . auth()->id(), '3600', function (){
+            return News::published()->latest()->paginate(20);
+        });
+
         return view('admin.news.index', compact('news'));
     }
 
